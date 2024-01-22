@@ -1,3 +1,5 @@
+from othello2023.othello import *
+
 from typing import List, Union
 import numpy as np
 from IPython.display import clear_output
@@ -5,14 +7,16 @@ import time
 import os
 import random
 
-BLACK = -1
-WHITE = 1
-EMPTY = 0
+BLACK = -1  # 黒
+WHITE = 1   # 白
+EMPTY = 0   # 空
 
 def init_board(N:int=8):
-    # Initialize the board with an 8x8 numpy array
+    """
+    ボードを初期化する
+    N: ボードの大きさ　(N=8がデフォルト値）
+    """
     board = np.zeros((N, N), dtype=int)
-    # Set up the initial four stones
     C0 = N//2
     C1 = C0-1
     board[C1, C1], board[C0, C0] = WHITE, WHITE  # White
@@ -26,10 +30,16 @@ def count_board(board, piece=EMPTY):
 BG_EMPTY = "\x1b[42m"
 BG_RESET = "\x1b[0m"
 
+# stone_codes = [
+#     f'{BG_EMPTY}⚫️{BG_RESET}',
+#     f'{BG_EMPTY}🟩{BG_RESET}',
+#     f'{BG_EMPTY}⚪️{BG_RESET}',
+# ]
+
 stone_codes = [
-    f'{BG_EMPTY}⚫️{BG_RESET}',
-    f'{BG_EMPTY}🟩{BG_RESET}',
-    f'{BG_EMPTY}⚪️{BG_RESET}',
+    f'黒',
+    f'・',
+    f'白',
 ]
 
 def stone(piece):
@@ -44,7 +54,7 @@ WHITE_NAME=''
 
 def display_board(board, clear=True, sleep=0, black=None, white=None):
     """
-    Display the Othello board with emoji representations.
+    オセロ盤を表示する
     """
     global BLACK_NAME, WHITE_NAME
     if clear:
